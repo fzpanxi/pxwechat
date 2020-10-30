@@ -1,0 +1,21 @@
+<?php
+use PXWeChat\Lib\WxPayApi;
+use PXWeChat\WxPayConfig;
+use PXWeChat\Lib\WxPayUnifiedOrder;
+$input = new WxPayUnifiedOrder();
+$input->SetBody("test");
+$input->SetAttach("test");
+$input->SetOut_trade_no("sdkphp".date("YmdHis"));
+$input->SetTotal_fee("1");
+$input->SetTime_start(date("YmdHis"));
+$input->SetTime_expire(date("YmdHis", time() + 600));
+$input->SetGoods_tag("test");
+$input->SetNotify_url("http://paysdk.weixin.qq.com/notify.php");
+$input->SetTrade_type("APP");
+$config['app_id'] = 'your app id';
+$config['mch_id'] = 'your mch id';
+$config['sign_type'] = 'HMAC-SHA256';
+$config['key'] = 'your secret';
+$config = new WxPayConfig($config);
+$order = WxPayApi::unifiedOrder($config, $input);
+var_dump($order);
